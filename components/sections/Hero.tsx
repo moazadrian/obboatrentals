@@ -21,9 +21,23 @@ export default function Hero() {
   return (
     <section ref={containerRef} className="relative flex items-center justify-center overflow-hidden" style={{ height: "100vh", minHeight: 600, maxHeight: 1200 }}>
       <div data-hero-media className="absolute inset-0" style={{ clipPath: "inset(100% 0% 0% 0%)" }}>
-        <video className="absolute inset-0 w-full h-full object-cover" autoPlay loop muted playsInline preload="auto">
-          <source src={HERO.videoSrc} type="video/webm" />
-        </video>
+        <div className="absolute inset-0">
+          <video
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            controls={false}
+            disablePictureInPicture
+            disableRemotePlayback
+          >
+            {/* mp4 first for iOS Safari which doesn't support webm */}
+            <source src={HERO.videoSrc.replace(".webm", ".mp4")} type="video/mp4" />
+            <source src={HERO.videoSrc} type="video/webm" />
+          </video>
+        </div>
         <div data-hero-overlay className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(4,13,26,0.25), rgba(4,13,26,0.1), rgba(4,13,26,0.5))", opacity: 0 }} />
       </div>
 
