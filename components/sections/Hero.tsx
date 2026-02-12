@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import gsap from "gsap";
 import { useGsap } from "@/lib/gsap";
 import { HERO } from "@/content/site-config";
@@ -35,21 +34,29 @@ export default function Hero() {
       className="relative flex items-center justify-center overflow-hidden"
       style={{ height: "100vh", minHeight: 600, maxHeight: 1200 }}
     >
-      {/* Background image (swap to <video> when real footage is ready) */}
+      {/* Background video */}
       <div data-hero-media className="absolute inset-0" style={{ clipPath: "inset(100% 0% 0% 0%)" }}>
-        <Image
-          src={HERO.bgImage}
-          alt="San Diego coastline from the water"
-          fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-        />
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source
+            src="https://obboatrentals.com/photos/ob-boat-rentals.webm"
+            type="video/webm"
+          />
+        </video>
+
+        {/* Very light overlay — lets the video breathe while keeping text readable */}
         <div
           data-hero-overlay
           className="absolute inset-0"
           style={{
-            background: "linear-gradient(to bottom, rgba(4,13,26,0.5), rgba(4,13,26,0.3), rgba(4,13,26,0.8))",
+            background:
+              "linear-gradient(to bottom, rgba(4,13,26,0.25), rgba(4,13,26,0.1), rgba(4,13,26,0.5))",
             opacity: 0,
           }}
         />
@@ -69,7 +76,12 @@ export default function Hero() {
         <h1
           data-hero-headline
           className="font-display text-hero whitespace-pre-line"
-          style={{ color: "var(--color-sand-50)", clipPath: "inset(0 0 100% 0)", opacity: 0 }}
+          style={{
+            color: "var(--color-sand-50)",
+            clipPath: "inset(0 0 100% 0)",
+            opacity: 0,
+            textShadow: "0 2px 20px rgba(4,13,26,0.4)",
+          }}
         >
           {HERO.headline}
         </h1>
@@ -77,7 +89,11 @@ export default function Hero() {
         <p
           data-hero-sub
           className="mt-6 text-lg md:text-xl font-light leading-relaxed max-w-xl mx-auto"
-          style={{ color: "rgba(243,234,212,0.6)", opacity: 0 }}
+          style={{
+            color: "rgba(243,234,212,0.8)",
+            opacity: 0,
+            textShadow: "0 1px 12px rgba(4,13,26,0.3)",
+          }}
         >
           {HERO.subhead}
         </p>
@@ -87,8 +103,12 @@ export default function Hero() {
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           style={{ opacity: 0 }}
         >
-          <a href={HERO.ctaPrimary.href} className="btn-outline">{HERO.ctaPrimary.label}</a>
-          <button onClick={open} className="btn-primary">{HERO.ctaSecondary.label}</button>
+          <a href={HERO.ctaPrimary.href} className="btn-outline">
+            {HERO.ctaPrimary.label}
+          </a>
+          <button onClick={open} className="btn-primary">
+            {HERO.ctaSecondary.label}
+          </button>
         </div>
       </div>
 
@@ -98,11 +118,30 @@ export default function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         style={{ opacity: 0 }}
       >
-        <span className="font-body uppercase" style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.3em", color: "rgba(243,234,212,0.25)" }}>
+        <span
+          className="font-body uppercase"
+          style={{
+            fontSize: 10,
+            fontWeight: 600,
+            letterSpacing: "0.3em",
+            color: "rgba(243,234,212,0.25)",
+          }}
+        >
           Scroll
         </span>
-        <div className="relative overflow-hidden" style={{ width: 1, height: 32, background: "linear-gradient(to bottom, rgba(243,234,212,0.25), transparent)" }}>
-          <div className="absolute inset-x-0 top-0 animate-bounce" style={{ height: 12, background: "rgba(77,208,200,0.6)" }} />
+        <div
+          className="relative overflow-hidden"
+          style={{
+            width: 1,
+            height: 32,
+            background:
+              "linear-gradient(to bottom, rgba(243,234,212,0.25), transparent)",
+          }}
+        >
+          <div
+            className="absolute inset-x-0 top-0 animate-bounce"
+            style={{ height: 12, background: "rgba(77,208,200,0.6)" }}
+          />
         </div>
       </div>
     </section>

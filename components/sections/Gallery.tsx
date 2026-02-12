@@ -1,61 +1,71 @@
 "use client";
 
-import { fadeUpStagger, useGsap } from "@/lib/gsap";
-import { WHY_US } from "@/content/site-config";
+import Image from "next/image";
+import gsap from "gsap";
+import { useGsap } from "@/lib/gsap";
+import { GALLERY_IMAGES } from "@/content/site-config";
 
-export default function WhyUs() {
+export default function Gallery() {
   const containerRef = useGsap(() => {
-    fadeUpStagger("[data-why-header] > *", { trigger: "[data-why-section]", stagger: 0.1 });
-    fadeUpStagger("[data-why-badge]", { trigger: "[data-why-grid]", stagger: 0.08, y: 30 });
+    gsap.fromTo(
+      "[data-gallery-header] > *",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: "power3.out",
+        scrollTrigger: { trigger: "[data-gallery-section]", start: "top 80%" },
+      }
+    );
+
+    const filmstrip = document.querySelector("[data-filmstrip]") as HTMLElement | null;
+    if (!filmstrip) return;
+    const scrollDist = filmstrip.scrollWidth - window.innerWidth + 80;
+
+    gsap.to(filmstrip, {
+      x: -scrollDist,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "[data-gallery-section]",
+        start: "top 20%",
+        end: () => `+=${scrollDist + 200}`,
+        scrub: 1.5,
+        pin: true,
+        anticipatePin: 1,
+      },
+    });
+
+    document.querySelectorAll("[data-gallery-img]").forEach((img) => {
+      gsap.to(img, {
+        y: -20, ease: "none",
+        scrollTrigger: { trigger: img.parentElement!, start: "top bottom", end: "bottom top", scrub: true },
+      });
+    });
   });
 
   return (
     <section
       ref={containerRef}
-      data-why-section
-      className="relative overflow-hidden"
-      style={{ padding: "var(--spacing-section) 0" }}
+      data-gallery-section
+      className="overflow-hidden"
+      style={{ padding: "var(--spacing-section) 0", background: "var(--color-navy-950)" }}
     >
-      <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, var(--color-navy-950), rgba(10,22,40,0.5), var(--color-navy-950))" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none" style={{ width: 600, height: 600, background: "rgba(43,181,173,0.03)", filter: "blur(120px)" }} />
+      <div data-gallery-header className="container-site mb-12 md:mb-16">
+        <p className="section-label" style={{ opacity: 0 }}>On the Water</p>
+        <h2 className="font-display text-section" style={{ color: "var(--color-sand-50)", opacity: 0 }}>
+          Life Looks Better from Here
+        </h2>
+      </div>
 
-      <div className="relative container-site">
-        <div data-why-header className="text-center max-w-2xl mx-auto mb-14 md:mb-20">
-          <p className="section-label" style={{ opacity: 0 }}>The OB Difference</p>
-          <h2 className="font-display text-section" style={{ color: "var(--color-sand-50)", opacity: 0 }}>
-            Not Your Average Rental
-          </h2>
-          <p className="mt-4 leading-relaxed" style={{ color: "rgba(243,234,212,0.45)", opacity: 0 }}>
-            Every detail is considered — from the premium leather seating to the full restroom onboard. This is boating done right.
-          </p>
-        </div>
-
-        <div data-why-grid className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6 max-w-4xl mx-auto">
-          {WHY_US.map((item) => (
-            <div
-              key={item.label}
-              data-why-badge
-              className="group relative p-6 lg:p-8 rounded-2xl text-center"
-              style={{
-                background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255,255,255,0.04)",
-                transition: "all 0.5s var(--ease-luxe)",
-                opacity: 0,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.02)";
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)";
-              }}
-            >
-              <div className="text-3xl mb-4" style={{ transition: "transform 0.5s var(--ease-luxe)" }}>{item.icon}</div>
-              <p className="font-body font-medium text-sm leading-snug" style={{ color: "rgba(250,245,235,0.75)" }}>{item.label}</p>
-            </div>
-          ))}
-        </div>
+      <div data-filmstrip className="flex gap-4 lg:gap-6 pl-5 md:pl-8 lg:pl-12 will-change-transform">
+        {GALLERY_IMAGES.map((img, i) => (
+          <div
+            key={i}
+            className="relative flex-shrink-0 rounded-2xl overflow-hidden"
+            style={{ width: "clamp(300px, 35vw, 480px)", aspectRatio: "3/4", background: "rgba(15,32,56,0.3)" }}
+          >
+            <Image data-gallery-img src={img.src} alt={img.alt} fill className="object-cover" sizes="480px" loading="lazy" />
+            <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(4,13,26,0.4), transparent)" }} />
+          </div>
+        ))}
       </div>
     </section>
   );
