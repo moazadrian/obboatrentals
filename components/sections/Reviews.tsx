@@ -22,16 +22,40 @@ export default function Reviews() {
 
         <div data-reviews-grid className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {REVIEWS.map((review, i) => (
-            <blockquote key={i} data-review-card className="relative p-8 rounded-2xl"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", opacity: 0 }}>
+            <blockquote key={i} data-review-card className="group relative p-8 rounded-2xl cursor-default"
+              style={{
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.04)",
+                transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
+                opacity: 0,
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget;
+                el.style.transform = "translateY(-6px)";
+                el.style.background = "rgba(255,255,255,0.05)";
+                el.style.borderColor = "rgba(77,208,200,0.2)";
+                el.style.boxShadow = "0 20px 50px -12px rgba(0,0,0,0.4), 0 0 30px -10px rgba(77,208,200,0.08)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget;
+                el.style.transform = "translateY(0)";
+                el.style.background = "rgba(255,255,255,0.02)";
+                el.style.borderColor = "rgba(255,255,255,0.04)";
+                el.style.boxShadow = "none";
+              }}>
+              {/* Stars — shift to teal on hover */}
               <div className="flex gap-1 mb-5">
                 {Array.from({ length: review.rating }).map((_, j) => (
-                  <StarIcon key={j} className="text-accent" size={16} />
+                  <StarIcon key={j} size={16} className="text-accent group-hover:text-teal-400 transition-colors duration-400" />
                 ))}
               </div>
-              <p className="text-sm leading-relaxed italic mb-6" style={{ color: "rgba(243,234,212,0.5)" }}>&ldquo;{review.text}&rdquo;</p>
+              {/* Quote text — brightens on hover */}
+              <p className="text-sm leading-relaxed italic mb-6 group-hover:text-[rgba(243,234,212,0.75)]" style={{ color: "rgba(243,234,212,0.5)", transition: "color 0.4s ease" }}>
+                &ldquo;{review.text}&rdquo;
+              </p>
               <footer><cite className="not-italic font-body font-semibold text-sm" style={{ color: "var(--color-sand-100)" }}>{review.name}</cite></footer>
-              <div className="absolute top-5 right-6 font-display leading-none select-none pointer-events-none" style={{ fontSize: "3.5rem", color: "rgba(255,255,255,0.03)" }}>&ldquo;</div>
+              {/* Big quote mark — teal glow on hover */}
+              <div className="absolute top-5 right-6 font-display leading-none select-none pointer-events-none group-hover:text-[rgba(77,208,200,0.08)]" style={{ fontSize: "3.5rem", color: "rgba(255,255,255,0.03)", transition: "color 0.5s ease" }}>&ldquo;</div>
             </blockquote>
           ))}
         </div>

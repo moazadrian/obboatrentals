@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { NAV_LINKS, SITE } from "@/content/site-config";
@@ -48,61 +48,81 @@ export default function Header() {
     return () => { tl.kill(); };
   }, [menuOpen]);
 
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+
   return (
-    <header
-      className="fixed inset-x-0 top-0 z-50"
-      style={{
-        transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
-        background: scrolled ? "rgba(4,13,26,0.85)" : "transparent",
-        backdropFilter: scrolled ? "blur(24px)" : "none",
-        boxShadow: scrolled ? "0 1px 0 rgba(255,255,255,0.04)" : "none",
-      }}
-    >
-      <nav className="container-site flex items-center justify-between h-20">
-        <Link href="/" className="relative z-10 font-display text-xl md:text-2xl tracking-tight" style={{ color: "var(--color-sand-50)" }}>
-          {SITE.name}
-        </Link>
+    <>
+      {/* ── Header bar ── */}
+      <header
+        className="fixed inset-x-0 top-0 z-50"
+        style={{
+          transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+          background: scrolled ? "rgba(4,13,26,0.85)" : "transparent",
+          backdropFilter: scrolled ? "blur(24px)" : "none",
+          boxShadow: scrolled ? "0 1px 0 rgba(255,255,255,0.04)" : "none",
+        }}
+      >
+        <nav className="container-site flex items-center justify-between h-20" aria-label="Main navigation">
+          <Link href="/" className="font-display text-xl md:text-2xl tracking-tight" style={{ color: "var(--color-sand-50)" }}>
+            {SITE.name}
+          </Link>
 
-        <div className="hidden lg:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="group relative text-sm font-body font-medium tracking-wide"
-              style={{ color: "rgba(243,234,212,0.6)", transition: "color 0.3s" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-sand-50)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(243,234,212,0.6)")}
-            >
-              {link.label}
-              <span className="absolute bottom-0 left-0 h-px w-0 group-hover:w-full" style={{ background: "var(--color-teal-400)", transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
-            </Link>
-          ))}
-          <button onClick={open} className="btn-primary text-xs">Book Now</button>
-        </div>
+          {/* Desktop links */}
+          <div className="hidden lg:flex items-center gap-8">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="group relative text-sm font-body font-medium tracking-wide"
+                style={{ color: "rgba(243,234,212,0.6)", transition: "color 0.3s" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-sand-50)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(243,234,212,0.6)")}
+              >
+                {link.label}
+                <span className="absolute bottom-0 left-0 h-px w-0 group-hover:w-full" style={{ background: "var(--color-teal-400)", transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+              </Link>
+            ))}
+            <button onClick={open} className="btn-primary text-xs">Book Now</button>
+          </div>
 
-        <button
-          onClick={() => setMenuOpen((p) => !p)}
-          className="lg:hidden relative z-10 w-10 h-10 flex flex-col items-center justify-center gap-1.5"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-        >
-          <span className="block w-6 h-0.5 origin-center" style={{ background: "var(--color-sand-50)", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", transform: menuOpen ? "rotate(45deg) translateY(4px)" : "none" }} />
-          <span className="block w-6 h-0.5" style={{ background: "var(--color-sand-50)", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", transform: menuOpen ? "rotate(-45deg) translateY(-4px)" : "none" }} />
-        </button>
-      </nav>
+          {/* Spacer keeps nav balanced on mobile where hamburger is fixed-positioned outside */}
+          <div className="lg:hidden w-10 h-10" />
+        </nav>
+      </header>
 
-      <div ref={menuRef} className="fixed inset-0 z-40 flex-col items-center justify-center hidden" style={{ background: "var(--color-navy-950)" }} role="dialog" aria-modal="true">
+      {/*
+        ── Hamburger button ──
+        SIBLING of <header>, not a child. Own root-level stacking context
+        at z-[70], above both header (z-50) and overlay (z-[60]).
+      */}
+      <button
+        onClick={() => setMenuOpen((p) => !p)}
+        className="lg:hidden fixed top-5 right-5 z-[70] w-10 h-10 flex flex-col items-center justify-center gap-1.5"
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={menuOpen}
+      >
+        <span className="block w-6 h-0.5 origin-center" style={{ background: "var(--color-sand-50)", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", transform: menuOpen ? "rotate(45deg) translateY(4px)" : "none" }} />
+        <span className="block w-6 h-0.5" style={{ background: "var(--color-sand-50)", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", transform: menuOpen ? "rotate(-45deg) translateY(-4px)" : "none" }} />
+      </button>
+
+      {/*
+        ── Mobile menu overlay ──
+        SIBLING of <header> at z-[60] — above header (z-50),
+        below hamburger (z-[70]) so the X button stays tappable.
+      */}
+      <div ref={menuRef} className="fixed inset-0 z-[60] flex-col items-center justify-center hidden" style={{ background: "var(--color-navy-950)" }} role="dialog" aria-modal="true" aria-hidden={!menuOpen}>
         <div ref={menuLinksRef} className="flex flex-col items-center gap-8">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)} className="font-display text-3xl" style={{ color: "var(--color-sand-50)", transition: "color 0.3s" }}
+            <Link key={link.href} href={link.href} onClick={closeMenu} className="font-display text-3xl" style={{ color: "var(--color-sand-50)", transition: "color 0.3s" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-teal-400)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-sand-50)")}>
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-sand-50)")}
+              tabIndex={menuOpen ? 0 : -1}>
               {link.label}
             </Link>
           ))}
-          <button onClick={() => { setMenuOpen(false); setTimeout(open, 400); }} className="btn-primary mt-4 text-base px-10 py-4">Book Now</button>
+          <button onClick={() => { closeMenu(); setTimeout(open, 400); }} className="btn-primary mt-4 text-base px-10 py-4" tabIndex={menuOpen ? 0 : -1}>Book Now</button>
         </div>
       </div>
-    </header>
+    </>
   );
 }

@@ -28,14 +28,57 @@ export default function WhyUs() {
           {WHY_US.map((item) => {
             const IconComp = WHY_US_ICONS[item.id];
             return (
-              <div key={item.id} data-why-badge className="group relative p-6 lg:p-8 rounded-2xl text-center"
-                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)", transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)", opacity: 0 }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; }}>
-                <div className="flex justify-center mb-4" style={{ color: "var(--color-teal-400)", transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)" }}>
+              <div key={item.id} data-why-badge className="group relative p-6 lg:p-8 rounded-2xl text-center overflow-hidden cursor-default"
+                style={{
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid rgba(255,255,255,0.04)",
+                  transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
+                  opacity: 0,
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget;
+                  el.style.transform = "translateY(-5px)";
+                  el.style.background = "rgba(255,255,255,0.05)";
+                  el.style.borderColor = "rgba(77,208,200,0.25)";
+                  el.style.boxShadow = "0 16px 40px -10px rgba(0,0,0,0.35), 0 0 24px -8px rgba(77,208,200,0.1)";
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget;
+                  el.style.transform = "translateY(0)";
+                  el.style.background = "rgba(255,255,255,0.02)";
+                  el.style.borderColor = "rgba(255,255,255,0.04)";
+                  el.style.boxShadow = "none";
+                }}>
+
+                {/* Radial glow — appears on hover behind the icon */}
+                <div
+                  className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none opacity-0 group-hover:opacity-100"
+                  style={{
+                    width: 120,
+                    height: 120,
+                    background: "radial-gradient(circle, rgba(77,208,200,0.12) 0%, transparent 70%)",
+                    transition: "opacity 0.6s ease",
+                  }}
+                />
+
+                {/* Icon — scales up + subtle rotate on hover */}
+                <div
+                  className="relative flex justify-center mb-4 group-hover:scale-110 group-hover:-rotate-3"
+                  style={{
+                    color: "var(--color-teal-400)",
+                    transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1), color 0.4s ease",
+                  }}
+                >
                   {IconComp && <IconComp size={28} />}
                 </div>
-                <p className="font-body font-medium text-sm leading-snug" style={{ color: "rgba(250,245,235,0.75)" }}>{item.label}</p>
+
+                {/* Label — brightens on hover */}
+                <p
+                  className="relative font-body font-medium text-sm leading-snug group-hover:text-[rgba(250,245,235,0.95)]"
+                  style={{ color: "rgba(250,245,235,0.65)", transition: "color 0.4s ease" }}
+                >
+                  {item.label}
+                </p>
               </div>
             );
           })}

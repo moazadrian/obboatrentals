@@ -109,13 +109,49 @@ export const WHY_US = [
 ] as const;
 
 export const GALLERY_IMAGES = [
-  { src: "https://images.unsplash.com/photo-1540946485063-a40da27545f8?w=960&q=80", alt: "Boat on open water at golden hour" },
-  { src: "https://images.unsplash.com/photo-1559494007-9f5847c49d94?w=960&q=80", alt: "Guests enjoying the deck" },
-  { src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=960&q=80", alt: "Aerial view of the coastline" },
-  { src: "https://images.unsplash.com/photo-1476673160081-cf065607f449?w=960&q=80", alt: "Sunset over the Gulf" },
-  { src: "https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=960&q=80", alt: "Premium boat detail" },
-  { src: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=960&q=80", alt: "Gulf Coast skyline" },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/ef26c19c-d1bf-466f-ba4f-14fecc7bb919/Dylan-Gandy-IMG_4769.jpg",
+    alt: "Pontoon boat cruising on emerald Gulf waters",
+  },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/6ce9a739-4f51-498f-8576-33167f796ad5/Dylan-Gandy-IMG_5148.jpg",
+    alt: "Friends relaxing together on a pontoon boat",
+  },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/be44dd21-edd6-4285-98be-f17a287e8ff4/Dylan-Gandy-IMG_4771.jpg",
+    alt: "Group enjoying a sunny day on the water",
+  },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/242a0f16-de75-4417-a4d5-a84b8b18bd91/Dylan-Gandy-IMG_4238.jpg",
+    alt: "Boat anchored near a sandbar with guests swimming",
+  },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/36424678-e70f-4c5f-a1ea-8fb377ce1c82/Dylan-Gandy-IMG_4701.jpg",
+    alt: "Premium leather seating and interior boat details",
+  },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/32c22b77-e878-47a6-8157-11ad5898f89b/Dylan-Gandy-IMG_5147.jpg",
+    alt: "Guests enjoying music and drinks on deck",
+  },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/cb91cb36-bfa1-453a-b056-c12e3953fb3f/Dylan-Gandy-IMG_7665.jpg",
+    alt: "Pontoon boat gliding along the Orange Beach coastline",
+  },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/f0819bfd-c0a9-4027-aa3e-80040a2dca1f/Dylan-Gandy-IMG_4568.jpg",
+    alt: "Golden hour cruise with warm sunset light",
+  },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/2cf206db-5b02-4140-89ff-0d48536a17a0/Dylan-Gandy-IMG_7818.jpg",
+    alt: "Sunset reflections on calm bay waters",
+  },
+  {
+    src: "https://files.elfsightcdn.com/eafe4a4d-3436-495d-b748-5bdce62d911d/34eaeb3d-dfa3-4295-abb1-d86cd1d4abd4/Dylan-Gandy-IMG_2236.jpg",
+    alt: "Group having fun near shallow crystal-clear water",
+  },
 ] as const;
+
+
 
 export type Review = { name: string; text: string; rating: number };
 
