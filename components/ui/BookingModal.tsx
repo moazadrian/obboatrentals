@@ -4,13 +4,14 @@ import { useEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 import { useBooking } from "@/lib/booking-context";
 import { prefersReducedMotion } from "@/lib/gsap";
+import { BOOKING } from "@/content/site-config";
+import { XIcon, ChevronRightIcon, ClockIcon } from "@/components/ui/Icons";
 
 export default function BookingModal() {
   const { isOpen, close } = useBooking();
   const overlayRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
-  const footerBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const overlay = overlayRef.current;
@@ -19,6 +20,8 @@ export default function BookingModal() {
 
     if (prefersReducedMotion()) {
       overlay.style.display = isOpen ? "flex" : "none";
+      if (isOpen) document.body.style.overflow = "hidden";
+      else document.body.style.overflow = "";
       return;
     }
 
@@ -27,12 +30,12 @@ export default function BookingModal() {
       const tl = gsap.timeline();
       tl.set(overlay, { display: "flex" })
         .fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" })
-        .fromTo(panel, { opacity: 0, y: 40, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out" }, "-=0.1");
+        .fromTo(panel, { x: "100%" }, { x: "0%", duration: 0.5, ease: "power3.out" }, "-=0.15");
       setTimeout(() => closeBtnRef.current?.focus(), 100);
     } else {
       document.body.style.overflow = "";
       const tl = gsap.timeline();
-      tl.to(panel, { opacity: 0, y: 20, duration: 0.25, ease: "power2.in" })
+      tl.to(panel, { x: "100%", duration: 0.35, ease: "power3.in" })
         .to(overlay, { opacity: 0, duration: 0.2, onComplete: () => { overlay.style.display = "none"; } }, "-=0.1");
     }
   }, [isOpen]);
@@ -46,67 +49,87 @@ export default function BookingModal() {
 
   const handleTabKey = useCallback((e: React.KeyboardEvent) => {
     if (e.key !== "Tab") return;
-    const first = closeBtnRef.current;
-    const last = footerBtnRef.current;
-    if (!first || !last) return;
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    // Simple focus trap within panel
+    const panel = panelRef.current;
+    if (!panel) return;
+    const focusable = panel.querySelectorAll<HTMLElement>("button, a, [tabindex]");
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
   }, []);
 
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[100] items-center justify-center p-5 hidden"
+      className="fixed inset-0 z-[100] hidden"
       role="dialog" aria-modal="true" aria-label="Book your experience"
       onKeyDown={handleTabKey}
+      style={{ display: "none" }}
     >
-      <div className="absolute inset-0" style={{ background: "rgba(4,13,26,0.8)", backdropFilter: "blur(12px)" }} onClick={close} />
+      {/* Backdrop */}
+      <div className="absolute inset-0" style={{ background: "rgba(4,13,26,0.6)", backdropFilter: "blur(8px)" }} onClick={close} />
 
+      {/* Panel — right side on desktop, full on mobile */}
       <div
         ref={panelRef}
-        className="relative w-full max-w-lg rounded-3xl overflow-hidden"
-        style={{ background: "var(--color-navy-900)", border: "1px solid rgba(255,255,255,0.06)", boxShadow: "0 32px 80px -12px rgba(0,0,0,0.6)" }}
+        className="absolute right-0 top-0 bottom-0 w-full sm:w-[440px] flex flex-col"
+        style={{ background: "var(--color-navy-900)", borderLeft: "1px solid rgba(255,255,255,0.06)", boxShadow: "-20px 0 60px rgba(0,0,0,0.4)", transform: "translateX(100%)" }}
       >
+        {/* Header */}
         <div className="flex items-center justify-between p-6" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
           <h2 className="font-display text-xl" style={{ color: "var(--color-sand-50)" }}>Book Your Experience</h2>
-          <button
-            ref={closeBtnRef}
-            onClick={close}
-            className="w-9 h-9 rounded-full flex items-center justify-center"
+          <button ref={closeBtnRef} onClick={close} className="w-9 h-9 rounded-full flex items-center justify-center"
             style={{ color: "rgba(243,234,212,0.4)", transition: "all 0.3s" }}
             onMouseEnter={(e) => { e.currentTarget.style.color = "var(--color-sand-50)"; e.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(243,234,212,0.4)"; e.currentTarget.style.background = "transparent"; }}
-            aria-label="Close booking modal"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
+            aria-label="Close">
+            <XIcon size={18} />
           </button>
         </div>
 
-        <div className="p-8 text-center">
-          <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "rgba(43,181,173,0.1)" }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: "var(--color-teal-400)" }}>
-              <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" />
-            </svg>
-          </div>
-          <h3 className="font-display text-2xl mb-3" style={{ color: "var(--color-sand-50)" }}>Coming Soon</h3>
-          <p className="text-sm leading-relaxed max-w-xs mx-auto mb-8" style={{ color: "rgba(243,234,212,0.45)" }}>
-            Our online booking system is being set up. In the meantime, call or text us to reserve your spot on the water.
+        {/* Content */}
+        <div className="flex-1 p-6 flex flex-col justify-center gap-4">
+          <p className="text-sm text-center mb-2" style={{ color: "rgba(243,234,212,0.5)" }}>Select an experience to book</p>
+
+          {/* Half Day */}
+          <a href={BOOKING.halfDay.url} target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-4 p-5 rounded-2xl"
+            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)", textDecoration: "none" }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.borderColor = "rgba(77,208,200,0.3)"; e.currentTarget.style.transform = "translateX(4px)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; e.currentTarget.style.transform = "translateX(0)"; }}>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(43,181,173,0.1)" }}>
+              <ClockIcon size={22} className="text-teal-400" />
+            </div>
+            <div className="flex-1">
+              <p className="font-body font-semibold text-base" style={{ color: "var(--color-sand-50)" }}>{BOOKING.halfDay.label}</p>
+              <p className="text-sm mt-0.5" style={{ color: "rgba(243,234,212,0.4)" }}>{BOOKING.halfDay.subtitle}</p>
+            </div>
+            <ChevronRightIcon size={20} className="opacity-30 flex-shrink-0" />
+          </a>
+
+          {/* Full Day */}
+          <a href={BOOKING.fullDay.url} target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-4 p-5 rounded-2xl"
+            style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)", textDecoration: "none" }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.borderColor = "rgba(77,208,200,0.3)"; e.currentTarget.style.transform = "translateX(4px)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; e.currentTarget.style.transform = "translateX(0)"; }}>
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(232,165,75,0.1)" }}>
+              <ClockIcon size={22} className="text-accent" />
+            </div>
+            <div className="flex-1">
+              <p className="font-body font-semibold text-base" style={{ color: "var(--color-sand-50)" }}>{BOOKING.fullDay.label}</p>
+              <p className="text-sm mt-0.5" style={{ color: "rgba(243,234,212,0.4)" }}>{BOOKING.fullDay.subtitle}</p>
+            </div>
+            <ChevronRightIcon size={20} className="opacity-30 flex-shrink-0" />
+          </a>
+        </div>
+
+        {/* Footer */}
+        <div className="p-6 text-center" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+          <p className="text-xs" style={{ color: "rgba(243,234,212,0.25)" }}>
+            Secure booking powered by Peek
           </p>
-          <a href="tel:6195550123" className="btn-primary w-full max-w-xs mx-auto">Call to Book — (619) 555-0123</a>
-          <p className="mt-4 text-xs" style={{ color: "rgba(243,234,212,0.2)" }}>Peek booking integration coming in Phase 2</p>
-        </div>
-
-        <div className="p-4 text-center" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-          <button
-            ref={footerBtnRef}
-            onClick={close}
-            className="text-sm"
-            style={{ color: "rgba(243,234,212,0.3)", background: "none", border: "none", cursor: "pointer", transition: "color 0.3s" }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-sand-100)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(243,234,212,0.3)")}
-          >
-            Close
-          </button>
         </div>
       </div>
     </div>
