@@ -35,6 +35,16 @@
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--color-navy-950); }
   ::-webkit-scrollbar-thumb { background: var(--color-navy-700); border-radius: 9999px; }
+
+  /* Hide native video controls (iOS play button overlay) */
+  video::-webkit-media-controls { display: none !important; }
+  video::-webkit-media-controls-enclosure { display: none !important; }
+  video::-webkit-media-controls-panel { display: none !important; }
+  video::-webkit-media-controls-start-playback-button { display: none !important; }
+
+  /* Hide horizontal scrollbar on gallery swipe filmstrip */
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
 }
 
 @layer components {
@@ -72,32 +82,30 @@
     color: var(--color-teal-400); font-family: var(--font-body); font-weight: 600;
     font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
   }
+
+  /*
+   * GSAP animation initial state.
+   * Elements use this class instead of inline style={{ opacity: 0 }}.
+   * GSAP animates from opacity:0 → 1 and removes the class or overrides it.
+   * If GSAP never fires, the CSS animation below reveals content after 2s.
+   */
+  .gsap-hidden {
+    opacity: 0;
+  }
+  .gsap-hidden-clip {
+    opacity: 0;
+    clip-path: inset(100% 0% 0% 0%);
+  }
 }
 
+/* Reduced motion: immediately show everything, no animations */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important; scroll-behavior: auto !important;
   }
-  [data-hero-media],
-  [data-hero-overlay],
-  [data-hero-headline],
-  [data-hero-sub],
-  [data-hero-cta],
-  [data-hero-scroll],
-  [data-exp-card],
-  [data-exp-header] > *,
-  [data-review-card],
-  [data-review-header] > *,
-  [data-why-badge],
-  [data-why-header] > *,
-  [data-gallery-header] > *,
-  [data-loc-content] > *,
-  [data-loc-image],
-  [data-loc-line],
-  [data-gallery-line],
-  [data-reviews-line],
-  .section-label {
+  .gsap-hidden,
+  .gsap-hidden-clip {
     opacity: 1 !important;
     clip-path: none !important;
     filter: none !important;
@@ -106,29 +114,14 @@
 }
 
 /*
- * Safety net: if GSAP never runs (script error, slow load, etc),
- * reveal ALL content after 2.5s. Once GSAP sets data-gsap-ready
- * on <body>, these animations are disabled and GSAP takes over.
+ * Safety net: if GSAP never runs, reveal ALL hidden content after 2s.
+ * GSAP sets inline styles which override class-based opacity,
+ * so this doesn't interfere when GSAP works correctly.
  */
-@keyframes gsap-fallback-reveal {
-  to { opacity: 1 !important; clip-path: none !important; filter: none !important; }
+@keyframes gsap-fallback {
+  to { opacity: 1; clip-path: none; filter: none; }
 }
-
-body:not([data-gsap-ready]) [data-hero-media],
-body:not([data-gsap-ready]) [data-hero-overlay],
-body:not([data-gsap-ready]) [data-hero-headline],
-body:not([data-gsap-ready]) [data-hero-sub],
-body:not([data-gsap-ready]) [data-hero-cta],
-body:not([data-gsap-ready]) [data-hero-scroll],
-body:not([data-gsap-ready]) [data-exp-card],
-body:not([data-gsap-ready]) [data-exp-header] > *,
-body:not([data-gsap-ready]) [data-review-card],
-body:not([data-gsap-ready]) [data-review-header] > *,
-body:not([data-gsap-ready]) [data-why-badge],
-body:not([data-gsap-ready]) [data-why-header] > *,
-body:not([data-gsap-ready]) [data-gallery-header] > *,
-body:not([data-gsap-ready]) [data-loc-content] > *,
-body:not([data-gsap-ready]) [data-loc-image],
-body:not([data-gsap-ready]) .section-label {
-  animation: gsap-fallback-reveal 0.6s ease 2.5s both;
+.gsap-hidden,
+.gsap-hidden-clip {
+  animation: gsap-fallback 0.5s ease 2s both;
 }
