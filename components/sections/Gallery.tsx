@@ -20,7 +20,18 @@ export default function Gallery() {
     const section = sectionRef.current;
     const filmstrip = filmstripRef.current;
     const header = headerRef.current;
-    if (!section || !filmstrip || prefersReducedMotion()) return;
+    if (!section || !filmstrip) return;
+
+    // If reduced motion: reveal everything without animation
+    if (prefersReducedMotion()) {
+      if (header) {
+        Array.from(header.children).forEach((el) => {
+          (el as HTMLElement).style.opacity = "1";
+          (el as HTMLElement).style.filter = "none";
+        });
+      }
+      return;
+    }
 
     const ctx = gsap.context(() => {
       // Header blur-fade in

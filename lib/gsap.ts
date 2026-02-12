@@ -34,7 +34,23 @@ export function prefersReducedMotion(): boolean {
 export function useGsap(callback: () => void, deps: React.DependencyList = []) {
   const ref = useRef<HTMLDivElement>(null!);
   useIsomorphicLayoutEffect(() => {
-    if (!ref.current || prefersReducedMotion()) return;
+    if (!ref.current) return;
+
+    // If reduced motion: skip animations but reveal all hidden content
+    if (prefersReducedMotion()) {
+      ref.current.querySelectorAll<HTMLElement>("[style]").forEach((el) => {
+        if (el.style.opacity === "0") el.style.opacity = "1";
+        if (el.style.clipPath) el.style.clipPath = "none";
+        if (el.style.filter?.includes("blur")) el.style.filter = "none";
+      });
+      // Also mark body so CSS fallback doesn't fire
+      document.body.setAttribute("data-gsap-ready", "");
+      return;
+    }
+
+    // Mark body to disable CSS fallback — GSAP is taking over
+    document.body.setAttribute("data-gsap-ready", "");
+
     const ctx = gsap.context(() => callback(), ref);
     return () => {
       ctx.revert();
