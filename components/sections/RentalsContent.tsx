@@ -6,12 +6,13 @@ import { fadeUpStagger, useGsap } from "@/lib/gsap";
 import { useBooking } from "@/lib/booking-context";
 import { RENTAL_PRODUCTS, RENTAL_INCLUSIONS, RENTAL_REQUIREMENTS } from "@/content/rentals";
 import {
-  ClockIcon, UsersIcon, RestroomIcon, SpeakerIcon, ShieldIcon, AnchorIcon, SeatIcon, ChevronRightIcon,
+  ClockIcon, UsersIcon, RestroomIcon, SpeakerIcon, ShieldIcon, AnchorIcon, SeatIcon, ChevronRightIcon, PawIcon, CoolerIcon,
 } from "@/components/ui/Icons";
 
 const ICON_MAP: Record<string, React.FC<{ className?: string; size?: number }>> = {
   shield: ShieldIcon, restroom: RestroomIcon, anchor: AnchorIcon,
   seating: SeatIcon, stereo: SpeakerIcon, stable: AnchorIcon,
+  pet: PawIcon, cooler: CoolerIcon,
 };
 
 export default function RentalsContent() {
@@ -116,7 +117,7 @@ export default function RentalsContent() {
 
                   {/* CTAs */}
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <button onClick={open} className="btn-primary flex-1 text-center text-sm">
+                    <button onClick={() => open(rental.bookingUrl)} className="btn-primary flex-1 text-center text-sm">
                       Book {rental.shortTitle}
                     </button>
                     <Link href={`/rentals/${rental.slug}`} className="btn-outline flex-1 text-center text-sm flex items-center justify-center gap-1">
@@ -200,13 +201,13 @@ export default function RentalsContent() {
           <p className="mt-4 leading-relaxed mb-8" style={{ color: "rgba(243,234,212,0.5)" }}>
             Book your premium boat rental today. Spots fill up fast during peak season.
           </p>
-          <button onClick={open} className="btn-primary text-sm">Book Now</button>
+          <button onClick={() => open()} className="btn-primary text-sm">Book Now</button>
         </div>
       </section>
 
       {/* ── Mobile Sticky CTA ── */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-40 p-4 pb-6" style={{ background: "linear-gradient(to top, var(--color-navy-950), rgba(4,13,26,0.95) 80%, transparent)" }}>
-        <button onClick={open} className="btn-primary w-full py-4 text-sm">Book Your Rental</button>
+        <button onClick={() => open()} className="btn-primary w-full py-4 text-sm">Book Your Rental</button>
       </div>
     </div>
   );

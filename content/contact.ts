@@ -13,7 +13,7 @@ export const CONTACT_INFO = {
   ...CONTACT,
   facebook: SOCIAL[0].href,
   googleMapsEmbed:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3441.8!2d-87.6273!3d30.2785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x889a0e3c2f3bbbbb%3A0x1234567890abcdef!2s4673%20Wharf%20Pkwy%20W%2C%20Orange%20Beach%2C%20AL%2036561!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "https://www.google.com/maps?q=4673+Wharf+Pkwy+W,+Orange+Beach,+AL+36561&output=embed",
   googleMapsLink:
     "https://maps.app.goo.gl/ah1oYZj7amWhuMYD7",
 } as const;

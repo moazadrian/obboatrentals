@@ -36,7 +36,7 @@ export default function BoatsContent() {
     <div ref={containerRef}>
       {/* Hero */}
       <section data-boats-hero className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-        <Image src={BOATS_HERO.image} alt="" fill className="object-cover" sizes="100vw" priority />
+        <Image src={BOATS_HERO.image} alt="Leisure Cat catamaran fleet in Orange Beach" fill className="object-cover" sizes="100vw" priority />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(4,13,26,0.7), rgba(4,13,26,0.85))" }} />
         <div className="relative container-site">
           <div data-boats-header className="text-center max-w-2xl mx-auto">
@@ -151,7 +151,7 @@ export default function BoatsContent() {
             Book your premium boat rental today. Spots fill up fast during peak season.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button onClick={open} className="btn-primary text-sm">Book Now</button>
+            <button onClick={() => open()} className="btn-primary text-sm">Book Now</button>
             <Link href="/rentals" className="btn-outline text-sm">View Rentals</Link>
           </div>
         </div>

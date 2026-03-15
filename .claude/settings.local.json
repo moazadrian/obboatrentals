@@ -6,7 +6,15 @@
       "Bash(npm list:*)",
       "Bash(find /c/Users/PC/Downloads/obboatrentals/obboatrentals/components -name *.tsx -type f)",
       "WebFetch(domain:obboatrentals.com)",
-      "Bash(curl -sI \"https://book.peek.com/s/5d06d0de-e669-4b84-bd8d-c2e2513743a2/EMprO\")"
+      "Bash(curl -sI \"https://book.peek.com/s/5d06d0de-e669-4b84-bd8d-c2e2513743a2/EMprO\")",
+      "Bash(find /c/Users/PC/Downloads/obboatrentals/obboatrentals -maxdepth 2 -type f \\\\\\(-name *.config.* -o -name .env* -o -name *.json \\\\\\))",
+      "WebSearch",
+      "WebFetch(domain:www.peek.com)",
+      "WebFetch(domain:forum.squarespace.com)",
+      "WebFetch(domain:book.peek.com)",
+      "Bash(curl -sI \"https://widget.peek.com/widget.js\")",
+      "Bash(curl -sI \"https://js.peek.com/widget.js\")",
+      "Bash(curl -s \"https://book.peek.com/s/5d06d0de-e669-4b84-bd8d-c2e2513743a2/EMprO\")"
     ]
   }
 }

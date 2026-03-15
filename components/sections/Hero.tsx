@@ -52,7 +52,7 @@ export default function Hero() {
         </p>
         <div data-hero-ctas className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4" style={{ opacity: 0 }}>
           <a href={HERO.ctaPrimary.href} className="btn-outline">{HERO.ctaPrimary.label}</a>
-          <button onClick={open} className="btn-primary">{HERO.ctaSecondary.label}</button>
+          <button onClick={() => open()} className="btn-primary">{HERO.ctaSecondary.label}</button>
         </div>
       </div>
 

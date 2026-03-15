@@ -4,11 +4,11 @@ import Link from "next/link";
 import { fadeUpStagger, useGsap } from "@/lib/gsap";
 import { CONTACT_HERO, CONTACT_INFO, DOCK_INFO, QUICK_ACTIONS } from "@/content/contact";
 import {
-  MapPinIcon, ClockIcon, FacebookIcon,
+  MapPinIcon, PhoneIcon, EmailIcon, FacebookIcon,
 } from "@/components/ui/Icons";
 
 const QUICK_ICON_MAP: Record<string, React.FC<{ className?: string; size?: number }>> = {
-  phone: ClockIcon, email: MapPinIcon, map: MapPinIcon, facebook: FacebookIcon,
+  phone: PhoneIcon, email: EmailIcon, map: MapPinIcon, facebook: FacebookIcon,
 };
 
 export default function ContactContent() {

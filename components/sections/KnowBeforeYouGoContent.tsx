@@ -115,7 +115,7 @@ export default function KnowBeforeYouGoContent() {
             Now that you know the details, let&apos;s get you on the water.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button onClick={open} className="btn-primary text-sm">Book Now</button>
+            <button onClick={() => open()} className="btn-primary text-sm">Book Now</button>
             <Link href="/rentals" className="btn-outline text-sm">View Rentals</Link>
           </div>
         </div>

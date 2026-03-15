@@ -6,7 +6,7 @@
 export const SITE = {
   name: "OB Boat Rentals",
   tagline: "Premium Catamaran Rentals · Orange Beach, Alabama",
-  shortTagline: "Where the Gulf meets adventure.",
+  shortTagline: "Orange Beach Boat Rentals — the area's ONLY boats with bathrooms!",
   description:
     "Experience the Alabama Gulf Coast aboard our pristine Leisure Cat catamarans — the area's only boats with bathrooms. Half-day, full-day, and sunset cruises available in Orange Beach.",
   url: "https://obboatrentals.com",
@@ -42,6 +42,7 @@ export const BOOKING = {
     url: "https://book.peek.com/s/5d06d0de-e669-4b84-bd8d-c2e2513743a2/wq9vP",
   },
 } as const;
+
 
 export type Experience = {
   id: string;
@@ -98,6 +99,25 @@ export const EXPERIENCES: Experience[] = [
     bookingUrl: null,
   },
 ];
+
+export const CRUISE_DETAILS = {
+  title: "Private Dolphin Sunset Cruise",
+  duration: "1.5 Hours",
+  capacity: "Up to 6 Guests",
+  minAge: "All Ages Welcome",
+  price: "Starting at $250",
+  boat: "26-foot Leisure Cat Catamaran",
+  description:
+    "Experience the magic of an Alabama Gulf Coast sunset with a guaranteed up-close dolphin encounter. Our private sunset cruise takes you through the calm back bays as the sky turns golden.",
+  highlights: [
+    "Guaranteed up-close dolphin encounters",
+    "Private cruise — just your group",
+    "26-foot Leisure Cat catamaran with restroom",
+    "Food and drink catering available",
+    "Perfect for couples, families, and celebrations",
+    "Prices subject to change on holidays and peak dates",
+  ],
+} as const;
 
 export const WHY_US = [
   { id: "restroom", label: "Restroom Onboard" },

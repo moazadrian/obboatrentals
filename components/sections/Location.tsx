@@ -23,7 +23,7 @@ export default function Location() {
             <h2 className="font-display text-section gsap-hidden" style={{ color: "var(--color-sand-50)" }}>{LOCATION.tagline}</h2>
             <p className="mt-5 leading-relaxed max-w-md gsap-hidden" style={{ color: "rgba(243,234,212,0.45)" }}>{LOCATION.description}</p>
             <p className="mt-3 text-sm gsap-hidden" style={{ color: "rgba(243,234,212,0.35)" }}>{LOCATION.address}</p>
-            <div className="mt-8 gsap-hidden"><button onClick={open} className="btn-primary">Plan Your Day</button></div>
+            <div className="mt-8 gsap-hidden"><button onClick={() => open()} className="btn-primary">Plan Your Day</button></div>
           </div>
 
           <div data-loc-image className="relative rounded-2xl overflow-hidden gsap-hidden-clip" style={{ aspectRatio: "4/3", background: "rgba(15,32,56,0.3)" }}>

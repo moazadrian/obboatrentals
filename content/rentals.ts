@@ -111,6 +111,8 @@ export const RENTAL_INCLUSIONS = [
   { label: "6-Speaker Bluetooth Stereo", icon: "stereo" },
   { label: "XM Radio / AUX Input", icon: "stereo" },
   { label: "Trash Can & Cleanup Supplies", icon: "stable" },
+  { label: "Pet Friendly", icon: "pet" },
+  { label: "Coolers Welcome", icon: "cooler" },
 ] as const;
 
 export const RENTAL_BRING = [

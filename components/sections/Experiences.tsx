@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { fadeUpStagger, useGsap } from "@/lib/gsap";
 import { useBooking } from "@/lib/booking-context";
-import { EXPERIENCES } from "@/content/site-config";
+import { EXPERIENCES, CONTACT } from "@/content/site-config";
 import { ClockIcon, UsersIcon, RestroomIcon, SpeakerIcon } from "@/components/ui/Icons";
 
 const STAT_ICONS: Record<string, React.FC<{ className?: string; size?: number }>> = {
@@ -58,7 +58,7 @@ export default function Experiences() {
                 {/* CTA — direct Peek link or disabled Coming Soon */}
                 {exp.bookingUrl ? (
                   <button
-                    onClick={open}
+                    onClick={() => open(exp.bookingUrl!)}
                     className="block w-full py-3 rounded-xl text-sm font-body font-semibold text-center cursor-pointer"
                     style={{
                       background: "rgba(255,255,255,0.04)",
@@ -80,18 +80,29 @@ export default function Experiences() {
                     Book Now
                   </button>
                 ) : (
-                  <button
-                    disabled
-                    className="w-full py-3 rounded-xl text-sm font-body font-semibold"
+                  <a
+                    href={CONTACT.phoneHref}
+                    className="block w-full py-3 rounded-xl text-sm font-body font-semibold text-center"
                     style={{
-                      background: "rgba(255,255,255,0.02)",
-                      color: "rgba(243,234,212,0.25)",
-                      border: "1px solid rgba(255,255,255,0.03)",
-                      cursor: "not-allowed",
+                      background: "rgba(255,255,255,0.04)",
+                      color: "var(--color-sand-100)",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                      transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
+                      textDecoration: "none",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "var(--color-teal-500)";
+                      e.currentTarget.style.color = "var(--color-navy-950)";
+                      e.currentTarget.style.borderColor = "var(--color-teal-500)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                      e.currentTarget.style.color = "var(--color-sand-100)";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
                     }}
                   >
-                    Coming Soon
-                  </button>
+                    Call to Book
+                  </a>
                 )}
               </div>
             </article>

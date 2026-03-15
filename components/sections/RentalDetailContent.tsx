@@ -6,12 +6,13 @@ import { useBooking } from "@/lib/booking-context";
 import { fadeUpStagger, useGsap } from "@/lib/gsap";
 import { type RentalProduct, RENTAL_INCLUSIONS } from "@/content/rentals";
 import {
-  ClockIcon, UsersIcon, ShieldIcon, RestroomIcon, AnchorIcon, SeatIcon, SpeakerIcon, ChevronRightIcon,
+  ClockIcon, UsersIcon, ShieldIcon, RestroomIcon, AnchorIcon, SeatIcon, SpeakerIcon, ChevronRightIcon, PawIcon, CoolerIcon,
 } from "@/components/ui/Icons";
 
 const ICON_MAP: Record<string, React.FC<{ className?: string; size?: number }>> = {
   shield: ShieldIcon, restroom: RestroomIcon, anchor: AnchorIcon,
   seating: SeatIcon, stereo: SpeakerIcon, stable: AnchorIcon,
+  pet: PawIcon, cooler: CoolerIcon,
 };
 
 export default function RentalDetailContent({ rental }: { rental: RentalProduct }) {
@@ -158,7 +159,7 @@ export default function RentalDetailContent({ rental }: { rental: RentalProduct 
             {rental.tagline} Spots fill up fast during peak season.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button onClick={open} className="btn-primary text-sm">Book {rental.shortTitle}</button>
+            <button onClick={() => open(rental.bookingUrl)} className="btn-primary text-sm">Book {rental.shortTitle}</button>
             <Link href="/rentals" className="btn-outline text-sm">View All Rentals</Link>
           </div>
         </div>

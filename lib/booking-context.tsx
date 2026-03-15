@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useCallback, type ReactNode } from
 
 interface BookingContextValue {
   isOpen: boolean;
-  open: () => void;
+  open: (url?: string) => void;
   close: () => void;
 }
 
@@ -14,7 +14,13 @@ const BookingContext = createContext<BookingContextValue>({
 
 export function BookingProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const open = useCallback(() => setIsOpen(true), []);
+  const open = useCallback((url?: string) => {
+    if (url) {
+      window.location.href = url;
+      return;
+    }
+    setIsOpen(true);
+  }, []);
   const close = useCallback(() => setIsOpen(false), []);
   return (
     <BookingContext.Provider value={{ isOpen, open, close }}>

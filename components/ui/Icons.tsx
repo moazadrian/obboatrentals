@@ -156,6 +156,47 @@ export function StarIcon({ className, size }: IconProps) {
   );
 }
 
+export function PawIcon(p: IconProps) {
+  return (
+    <I {...p}>
+      <circle cx="11" cy="4" r="2" />
+      <circle cx="4.5" cy="9" r="2" />
+      <circle cx="17.5" cy="9" r="2" />
+      <circle cx="8" cy="9" r="2" />
+      <circle cx="14" cy="9" r="2" />
+      <path d="M5.5 16.5a3.5 3.5 0 015-3.2 3.5 3.5 0 015 3.2 3.5 3.5 0 01-5 3.2 3.5 3.5 0 01-5-3.2z" />
+    </I>
+  );
+}
+
+export function CoolerIcon(p: IconProps) {
+  return (
+    <I {...p}>
+      <rect x="3" y="6" width="18" height="12" rx="2" />
+      <path d="M3 12h18" />
+      <path d="M8 6V4m8 2V4" />
+      <path d="M10 12v-2h4v2" />
+    </I>
+  );
+}
+
+export function PhoneIcon(p: IconProps) {
+  return (
+    <I {...p}>
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+    </I>
+  );
+}
+
+export function EmailIcon(p: IconProps) {
+  return (
+    <I {...p}>
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="M22 7l-10 7L2 7" />
+    </I>
+  );
+}
+
 export function FacebookIcon(p: IconProps) {
   return (
     <svg width={p.size ?? 16} height={p.size ?? 16} fill="currentColor" viewBox="0 0 24 24" className={p.className}>

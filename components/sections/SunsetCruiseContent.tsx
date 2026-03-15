@@ -3,29 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { fadeUpStagger, useGsap } from "@/lib/gsap";
-import { PAGE_BACKGROUNDS, CONTACT } from "@/content/site-config";
+import { PAGE_BACKGROUNDS, CONTACT, CRUISE_DETAILS } from "@/content/site-config";
 import {
   ClockIcon, UsersIcon, ShieldIcon, ChevronRightIcon,
 } from "@/components/ui/Icons";
-
-const CRUISE_DETAILS = {
-  title: "Private Dolphin Sunset Cruise",
-  duration: "1.5 Hours",
-  capacity: "Up to 6 Guests",
-  minAge: "All Ages Welcome",
-  price: "Starting at $250",
-  boat: "26-foot Leisure Cat Catamaran",
-  description:
-    "Experience the magic of an Alabama Gulf Coast sunset with a guaranteed up-close dolphin encounter. Our private sunset cruise takes you through the calm back bays as the sky turns golden.",
-  highlights: [
-    "Guaranteed up-close dolphin encounters",
-    "Private cruise — just your group",
-    "26-foot Leisure Cat catamaran with restroom",
-    "Food and drink catering available",
-    "Perfect for couples, families, and celebrations",
-    "Prices subject to change on holidays and peak dates",
-  ],
-} as const;
 
 export default function SunsetCruiseContent() {
   const containerRef = useGsap(() => {

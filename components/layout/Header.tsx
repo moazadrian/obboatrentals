@@ -82,7 +82,7 @@ export default function Header() {
                 <span className="absolute bottom-0 left-0 h-px w-0 group-hover:w-full" style={{ background: "var(--color-teal-400)", transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
               </Link>
             ))}
-            <button onClick={open} className="btn-primary text-xs">Book Now</button>
+            <button onClick={() => open()} className="btn-primary text-xs">Book Now</button>
           </div>
 
           {/* Spacer keeps nav balanced on mobile where hamburger is fixed-positioned outside */}
@@ -120,7 +120,7 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <button onClick={() => { closeMenu(); setTimeout(open, 400); }} className="btn-primary mt-4 text-base px-10 py-4" tabIndex={menuOpen ? 0 : -1}>Book Now</button>
+          <button onClick={() => { closeMenu(); setTimeout(() => open(), 400); }} className="btn-primary mt-4 text-base px-10 py-4" tabIndex={menuOpen ? 0 : -1}>Book Now</button>
         </div>
       </div>
     </>
