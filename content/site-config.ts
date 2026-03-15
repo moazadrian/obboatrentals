@@ -5,10 +5,10 @@
 
 export const SITE = {
   name: "OB Boat Rentals",
-  tagline: "Premium Boat Rentals · Orange Beach, Alabama",
+  tagline: "Premium Catamaran Rentals · Orange Beach, Alabama",
   shortTagline: "Where the Gulf meets adventure.",
   description:
-    "Experience the Alabama Gulf Coast aboard our premium, fully equipped boats. Half-day, full-day, and sunset cruises available in Orange Beach.",
+    "Experience the Alabama Gulf Coast aboard our pristine Leisure Cat catamarans — the area's only boats with bathrooms. Half-day, full-day, and sunset cruises available in Orange Beach.",
   url: "https://obboatrentals.com",
   ogImage: "/images/og-image.jpg",
 } as const;
@@ -24,7 +24,7 @@ export const NAV_LINKS = [
 export const HERO = {
   headline: "Your Day on\nthe Water Starts Here",
   subhead:
-    "Premium boat rentals on the Alabama Gulf Coast — fully equipped, captain-ready, and unforgettable.",
+    "Pristine Leisure Cat catamarans on the Alabama Gulf Coast — the area's only boats with bathrooms. Fully equipped, captain-ready, and unforgettable.",
   videoSrc: "https://obboatrentals.com/photos/ob-boat-rentals.webm",
   ctaPrimary: { label: "Explore Rentals", href: "#experiences" },
   ctaSecondary: { label: "Book Now" },
@@ -87,13 +87,13 @@ export const EXPERIENCES: Experience[] = [
   {
     id: "sunset-cruise",
     title: "Sunset Cruise",
-    duration: "2.5 Hours",
-    hours: "2.5h",
-    tagline: "Golden hour, open water, pure magic.",
+    duration: "1.5 Hours",
+    hours: "1.5h",
+    tagline: "Private dolphin sunset cruise — guaranteed up-close dolphin encounters.",
     image: "https://images.unsplash.com/photo-1500514966906-fe245eea9344?w=800&q=80",
-    minAge: "21+",
-    maxPax: 8,
-    stats: ["2.5 Hours", "Seats 8", "Restroom", "Bluetooth"],
+    minAge: "All Ages",
+    maxPax: 6,
+    stats: ["1.5 Hours", "Seats 6", "Restroom", "Bluetooth"],
     href: "/sunset-cruise",
     bookingUrl: null,
   },
@@ -165,14 +165,17 @@ export const LOCATION = {
   name: "Orange Beach, Alabama",
   address: "4673 Wharf Pkwy W, Orange Beach, AL 36561",
   tagline: "Departing from The Wharf",
-  description: "We launch from The Wharf in Orange Beach — steps from world-class dining, shopping, and entertainment on the Alabama Gulf Coast.",
+  description: "We launch from The Wharf in Orange Beach, directly below Spring Hill Suites Marriott — steps from world-class dining, shopping, and entertainment on the Alabama Gulf Coast. Over 20 miles of calm bays, rivers, islands, and bayous to explore.",
   image: "https://images.unsplash.com/photo-1515896769750-31548aa180ed?w=1200&q=80",
 } as const;
 
 export const CONTACT = {
   phone: "251-979-3644",
+  phoneHref: "tel:+12519793644",
   email: "orangebeachboatrentals@gmail.com",
+  emailHref: "mailto:orangebeachboatrentals@gmail.com",
   address: "4673 Wharf Pkwy W\nOrange Beach, AL 36561",
+  addressOneLine: "4673 Wharf Pkwy W, Orange Beach, AL 36561",
 } as const;
 
 export const SOCIAL = [

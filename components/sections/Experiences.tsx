@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { fadeUpStagger, useGsap } from "@/lib/gsap";
+import { useBooking } from "@/lib/booking-context";
 import { EXPERIENCES } from "@/content/site-config";
 import { ClockIcon, UsersIcon, RestroomIcon, SpeakerIcon } from "@/components/ui/Icons";
 
@@ -10,6 +11,7 @@ const STAT_ICONS: Record<string, React.FC<{ className?: string; size?: number }>
 };
 
 export default function Experiences() {
+  const { open } = useBooking();
   const containerRef = useGsap(() => {
     fadeUpStagger("[data-exp-header] > *", { trigger: "[data-exp-section]", stagger: 0.1 });
     fadeUpStagger("[data-exp-card]", { trigger: "[data-exp-section]", stagger: 0.15, y: 50 });
@@ -19,14 +21,14 @@ export default function Experiences() {
     <section ref={containerRef} id="experiences" data-exp-section className="relative" style={{ padding: "var(--spacing-section) 0", background: "var(--color-navy-950)" }}>
       <div className="container-site">
         <div data-exp-header className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
-          <p className="section-label" style={{ opacity: 0 }}>Choose Your Experience</p>
-          <h2 className="font-display text-section" style={{ color: "var(--color-sand-50)", opacity: 0 }}>Three Ways to Get on the Water</h2>
+          <p className="section-label gsap-hidden">Choose Your Experience</p>
+          <h2 className="font-display text-section gsap-hidden" style={{ color: "var(--color-sand-50)" }}>Three Ways to Get on the Water</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {EXPERIENCES.map((exp) => (
-            <article key={exp.id} data-exp-card className="group relative rounded-2xl overflow-hidden"
-              style={{ background: "rgba(15,32,56,0.4)", border: "1px solid rgba(255,255,255,0.04)", transition: "all 0.7s cubic-bezier(0.16,1,0.3,1)", opacity: 0 }}
+            <article key={exp.id} data-exp-card className="group relative rounded-2xl overflow-hidden gsap-hidden"
+              style={{ background: "rgba(15,32,56,0.4)", border: "1px solid rgba(255,255,255,0.04)", transition: "all 0.7s cubic-bezier(0.16,1,0.3,1)" }}
               onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 20px 60px -12px rgba(0,0,0,0.5)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.04)"; }}>
               <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
@@ -55,16 +57,13 @@ export default function Experiences() {
 
                 {/* CTA — direct Peek link or disabled Coming Soon */}
                 {exp.bookingUrl ? (
-                  <a
-                    href={exp.bookingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full py-3 rounded-xl text-sm font-body font-semibold text-center"
+                  <button
+                    onClick={open}
+                    className="block w-full py-3 rounded-xl text-sm font-body font-semibold text-center cursor-pointer"
                     style={{
                       background: "rgba(255,255,255,0.04)",
                       color: "var(--color-sand-100)",
                       border: "1px solid rgba(255,255,255,0.06)",
-                      textDecoration: "none",
                       transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
                     }}
                     onMouseEnter={(e) => {
@@ -79,7 +78,7 @@ export default function Experiences() {
                     }}
                   >
                     Book Now
-                  </a>
+                  </button>
                 ) : (
                   <button
                     disabled

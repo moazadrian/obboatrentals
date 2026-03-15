@@ -16,18 +16,17 @@ export default function Reviews() {
 
       <div className="relative container-site">
         <div data-review-header className="text-center max-w-2xl mx-auto mb-14 md:mb-20">
-          <p className="section-label" style={{ opacity: 0 }}>What They&apos;re Saying</p>
-          <h2 className="font-display text-section" style={{ color: "var(--color-sand-50)", opacity: 0 }}>Trusted by Gulf Coast Visitors</h2>
+          <p className="section-label gsap-hidden">What They&apos;re Saying</p>
+          <h2 className="font-display text-section gsap-hidden" style={{ color: "var(--color-sand-50)" }}>Trusted by Gulf Coast Visitors</h2>
         </div>
 
         <div data-reviews-grid className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {REVIEWS.map((review, i) => (
-            <blockquote key={i} data-review-card className="group relative p-8 rounded-2xl cursor-default"
+            <blockquote key={i} data-review-card className="group relative p-8 rounded-2xl cursor-default gsap-hidden"
               style={{
                 background: "rgba(255,255,255,0.02)",
                 border: "1px solid rgba(255,255,255,0.04)",
                 transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
-                opacity: 0,
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget;

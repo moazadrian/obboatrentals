@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SITE } from "@/content/site-config";
+import { LOCAL_BUSINESS_SCHEMA } from "@/content/seo";
 import { BookingProvider } from "@/lib/booking-context";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -21,7 +22,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_SCHEMA) }}
+        />
+      </head>
       <body className="min-h-screen">
         <BookingProvider>
           <Header />

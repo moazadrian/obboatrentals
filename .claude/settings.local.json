@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(find /c/Users/PC/Downloads/obboatrentals/obboatrentals -maxdepth 2 -name tailwind.config.* -o -name .npmrc)",
+      "Bash(npm list:*)",
+      "Bash(find /c/Users/PC/Downloads/obboatrentals/obboatrentals/components -name *.tsx -type f)",
+      "WebFetch(domain:obboatrentals.com)",
+      "Bash(curl -sI \"https://book.peek.com/s/5d06d0de-e669-4b84-bd8d-c2e2513743a2/EMprO\")"
+    ]
+  }
+}

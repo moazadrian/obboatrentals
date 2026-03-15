@@ -19,14 +19,14 @@ export default function Location() {
       <div className="container-site">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <div data-loc-content>
-            <p className="section-label" style={{ opacity: 0 }}>Our Location</p>
-            <h2 className="font-display text-section" style={{ color: "var(--color-sand-50)", opacity: 0 }}>{LOCATION.tagline}</h2>
-            <p className="mt-5 leading-relaxed max-w-md" style={{ color: "rgba(243,234,212,0.45)", opacity: 0 }}>{LOCATION.description}</p>
-            <p className="mt-3 text-sm" style={{ color: "rgba(243,234,212,0.35)", opacity: 0 }}>{LOCATION.address}</p>
-            <div className="mt-8" style={{ opacity: 0 }}><button onClick={open} className="btn-primary">Plan Your Day</button></div>
+            <p className="section-label gsap-hidden">Our Location</p>
+            <h2 className="font-display text-section gsap-hidden" style={{ color: "var(--color-sand-50)" }}>{LOCATION.tagline}</h2>
+            <p className="mt-5 leading-relaxed max-w-md gsap-hidden" style={{ color: "rgba(243,234,212,0.45)" }}>{LOCATION.description}</p>
+            <p className="mt-3 text-sm gsap-hidden" style={{ color: "rgba(243,234,212,0.35)" }}>{LOCATION.address}</p>
+            <div className="mt-8 gsap-hidden"><button onClick={open} className="btn-primary">Plan Your Day</button></div>
           </div>
 
-          <div data-loc-image className="relative rounded-2xl overflow-hidden" style={{ aspectRatio: "4/3", background: "rgba(15,32,56,0.3)", clipPath: "inset(0% 100% 0% 0%)" }}>
+          <div data-loc-image className="relative rounded-2xl overflow-hidden gsap-hidden-clip" style={{ aspectRatio: "4/3", background: "rgba(15,32,56,0.3)" }}>
             <Image src={LOCATION.image} alt={LOCATION.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" loading="lazy" />
             <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(4,13,26,0.3), transparent)" }} />
             <div className="absolute bottom-6 left-6 px-4 py-2 rounded-full glass flex items-center gap-2">

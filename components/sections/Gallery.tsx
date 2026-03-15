@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,24 +11,12 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(false);
-  useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-  return isDesktop;
-}
-
 export default function Gallery() {
   const sectionRef = useRef<HTMLElement>(null);
   const filmstripRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const isDesktop = useIsDesktop();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const section = sectionRef.current;
     const filmstrip = filmstripRef.current;
     const header = headerRef.current;
@@ -45,7 +33,7 @@ export default function Gallery() {
     }
 
     const ctx = gsap.context(() => {
-      // Header blur-fade
+      // Header blur-fade — runs on all viewports
       if (header) {
         gsap.fromTo(
           header.children,
@@ -58,34 +46,30 @@ export default function Gallery() {
         );
       }
 
-      // Desktop only: GSAP horizontal scroll with pin
-      if (isDesktop) {
-        const totalWidth = filmstrip.scrollWidth;
-        const viewportWidth = window.innerWidth;
-        const scrollDistance = totalWidth - viewportWidth + 100;
+      // Desktop only: horizontal scroll with pin via gsap.matchMedia
+      const mm = gsap.matchMedia();
+      mm.add("(min-width: 768px)", () => {
+        const scrollDistance = filmstrip.scrollWidth - window.innerWidth;
+        if (scrollDistance <= 0) return;
 
-        if (scrollDistance > 0) {
-          gsap.to(filmstrip, {
-            x: -scrollDistance,
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top top",
-              end: () => `+=${scrollDistance * 0.8}`,
-              scrub: 1,
-              pin: true,
-              pinReparent: true,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-            },
-          });
-        }
-      }
-      // Mobile: no GSAP horizontal scroll — uses native overflow-x swipe
+        gsap.to(filmstrip, {
+          x: -scrollDistance,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => `+=${scrollDistance}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
     }, section);
 
     return () => ctx.revert();
-  }, [isDesktop]);
+  }, []);
 
   return (
     <section
@@ -99,29 +83,16 @@ export default function Gallery() {
         <h2 className="font-display text-section gsap-hidden" style={{ color: "var(--color-sand-50)" }}>Life Looks Better from Here</h2>
       </div>
 
-      {/*
-        Mobile: overflow-x-auto for native swipe scrolling + snap
-        Desktop: overflow visible, GSAP handles horizontal movement
-      */}
       <div
         ref={filmstripRef}
-        className={`flex gap-4 lg:gap-6 pl-5 md:pl-8 lg:pl-12 pr-5 md:pr-0 ${
-          isDesktop
-            ? ""
-            : "overflow-x-auto snap-x snap-mandatory scrollbar-hide"
-        }`}
-        style={{
-          willChange: isDesktop ? "transform" : "auto",
-          paddingBottom: "var(--spacing-section)",
-          WebkitOverflowScrolling: "touch",
-        }}
+        className="gallery-filmstrip flex gap-4 lg:gap-6 pl-5 md:pl-8 lg:pl-12 pr-5 md:pr-0 scrollbar-hide"
+        style={{ paddingBottom: "var(--spacing-section)" }}
       >
         {GALLERY_IMAGES.map((img, i) => (
           <div
             key={i}
-            className={`relative flex-shrink-0 rounded-2xl overflow-hidden ${isDesktop ? "" : "snap-center"}`}
+            className="gallery-item relative flex-shrink-0 rounded-2xl overflow-hidden"
             style={{
-              width: isDesktop ? "clamp(280px, 35vw, 480px)" : "80vw",
               aspectRatio: "3/4",
               background: "rgba(15,32,56,0.3)",
             }}

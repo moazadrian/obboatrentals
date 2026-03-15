@@ -29,9 +29,10 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  body { background-color: var(--color-navy-950); color: var(--color-sand-100); font-family: var(--font-body); font-weight: 300; overflow-x: hidden; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; }
+  body { background-color: var(--color-navy-950); color: var(--color-sand-100); font-family: var(--font-body); font-weight: 300; }
   ::selection { background: rgba(43, 181, 173, 0.3); color: white; }
+  html { scrollbar-color: var(--color-navy-700) var(--color-navy-950); scrollbar-width: thin; }
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--color-navy-950); }
   ::-webkit-scrollbar-thumb { background: var(--color-navy-700); border-radius: 9999px; }
@@ -77,6 +78,12 @@
   .btn-outline:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(243, 234, 212, 0.45); }
   .btn-outline:active { transform: scale(0.97); }
   .btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--color-navy-950), 0 0 0 4px rgba(243, 234, 212, 0.4); }
+
+  .gallery-filmstrip { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  @media (min-width: 768px) { .gallery-filmstrip { overflow: visible; scroll-snap-type: none; } }
+
+  .gallery-item { width: 80vw; scroll-snap-align: center; }
+  @media (min-width: 768px) { .gallery-item { width: clamp(280px, 35vw, 480px); scroll-snap-align: none; } }
 
   .section-label {
     color: var(--color-teal-400); font-family: var(--font-body); font-weight: 600;

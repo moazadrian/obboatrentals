@@ -17,9 +17,9 @@ export default function WhyUs() {
 
       <div className="relative container-site">
         <div data-why-header className="text-center max-w-2xl mx-auto mb-14 md:mb-20">
-          <p className="section-label" style={{ opacity: 0 }}>The OB Difference</p>
-          <h2 className="font-display text-section" style={{ color: "var(--color-sand-50)", opacity: 0 }}>Not Your Average Rental</h2>
-          <p className="mt-4 leading-relaxed" style={{ color: "rgba(243,234,212,0.45)", opacity: 0 }}>
+          <p className="section-label gsap-hidden">The OB Difference</p>
+          <h2 className="font-display text-section gsap-hidden" style={{ color: "var(--color-sand-50)" }}>Not Your Average Rental</h2>
+          <p className="mt-4 leading-relaxed gsap-hidden" style={{ color: "rgba(243,234,212,0.45)" }}>
             Every detail is considered — from the premium leather seating to the full restroom onboard. This is boating done right.
           </p>
         </div>
@@ -28,12 +28,11 @@ export default function WhyUs() {
           {WHY_US.map((item) => {
             const IconComp = WHY_US_ICONS[item.id];
             return (
-              <div key={item.id} data-why-badge className="group relative p-6 lg:p-8 rounded-2xl text-center overflow-hidden cursor-default"
+              <div key={item.id} data-why-badge className="group relative p-6 lg:p-8 rounded-2xl text-center overflow-hidden cursor-default gsap-hidden"
                 style={{
                   background: "rgba(255,255,255,0.02)",
                   border: "1px solid rgba(255,255,255,0.04)",
                   transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
-                  opacity: 0,
                 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget;
