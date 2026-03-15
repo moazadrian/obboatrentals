@@ -117,10 +117,10 @@ export default function RentalsContent() {
 
                   {/* CTAs */}
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <button onClick={() => open(rental.bookingUrl)} className="btn-primary flex-1 text-center text-sm">
+                    <button onClick={() => open(rental.bookingUrl)} className="btn-primary flex-1 text-center text-sm whitespace-nowrap">
                       Book {rental.shortTitle}
                     </button>
-                    <Link href={`/rentals/${rental.slug}`} className="btn-outline flex-1 text-center text-sm flex items-center justify-center gap-1">
+                    <Link href={`/rentals/${rental.slug}`} className="btn-outline flex-1 text-center text-sm flex items-center justify-center gap-1 whitespace-nowrap">
                       Details <ChevronRightIcon size={14} />
                     </Link>
                   </div>

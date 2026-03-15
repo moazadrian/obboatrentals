@@ -61,20 +61,20 @@ export default function Experiences() {
                     onClick={() => open(exp.bookingUrl!)}
                     className="block w-full py-3 rounded-xl text-sm font-body font-semibold text-center cursor-pointer"
                     style={{
-                      background: "rgba(255,255,255,0.04)",
-                      color: "var(--color-sand-100)",
-                      border: "1px solid rgba(255,255,255,0.06)",
+                      background: "var(--color-teal-500)",
+                      color: "var(--color-navy-950)",
+                      border: "1px solid var(--color-teal-500)",
                       transition: "all 0.5s cubic-bezier(0.16,1,0.3,1)",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "var(--color-teal-500)";
-                      e.currentTarget.style.color = "var(--color-navy-950)";
-                      e.currentTarget.style.borderColor = "var(--color-teal-500)";
+                      e.currentTarget.style.background = "var(--color-teal-400)";
+                      e.currentTarget.style.borderColor = "var(--color-teal-400)";
+                      e.currentTarget.style.boxShadow = "0 0 32px rgba(43,181,173,0.25)";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-                      e.currentTarget.style.color = "var(--color-sand-100)";
-                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
+                      e.currentTarget.style.background = "var(--color-teal-500)";
+                      e.currentTarget.style.borderColor = "var(--color-teal-500)";
+                      e.currentTarget.style.boxShadow = "none";
                     }}
                   >
                     Book Now
@@ -91,13 +91,11 @@ export default function Experiences() {
                       textDecoration: "none",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "var(--color-teal-500)";
-                      e.currentTarget.style.color = "var(--color-navy-950)";
-                      e.currentTarget.style.borderColor = "var(--color-teal-500)";
+                      e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-                      e.currentTarget.style.color = "var(--color-sand-100)";
                       e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
                     }}
                   >
